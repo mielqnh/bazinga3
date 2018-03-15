@@ -52,9 +52,10 @@ public class ParameterEndPointIT {
         assertThat(responseEntity.getBody()).isNotNull();
         assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.CREATED);
         assertThat(responseEntity.getBody().getType()).isEqualTo(ParameterEnum.PROMOTIONALDISCOUNT);
+        Long newId = responseEntity.getBody().getId();
 
         entity = new HttpEntity<>(null, httpHeaders);
-        ResponseEntity<String> response = testRestTemplate.exchange(createURLWithPort(BASE_URI + "/getall"),
+        ResponseEntity<String> response = testRestTemplate.exchange(createURLWithPort(BASE_URI + "/findall"),
         HttpMethod.GET, entity, String.class);
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
 
@@ -62,17 +63,17 @@ public class ParameterEndPointIT {
         String expected = "[{\"id\":1,\"type\":\"PROFITMARGIN\",\"percentage\":30},{\"id\":2,\"type\":\"PREMIUMCUSTOMER\",\"percentage\":10},{\"id\":3,\"type\":\"DAMAGEDISCOUNT\",\"percentage\":20},{\"id\":4,\"type\":\"PROMOTIONALDISCOUNT\",\"percentage\":21}]";
         JSONAssert.assertEquals(expected, response.getBody(), false);
 
-        ResponseEntity<Iterable> iterableResponseEntity = testRestTemplate.getForEntity(createURLWithPort(BASE_URI + "/getall"), Iterable.class);
+        ResponseEntity<Iterable> iterableResponseEntity = testRestTemplate.getForEntity(createURLWithPort(BASE_URI + "/findall"), Iterable.class);
         System.out.println("HttpStatus = " + iterableResponseEntity.getStatusCode().toString());
         assertThat(iterableResponseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
         assertThat((List) iterableResponseEntity.getBody()).size().isEqualTo(4);
 
         //find Parameter with type=PROFITMARGIN that exists
-        ResponseEntity<Parameter> responseEntityOK = testRestTemplate.getForEntity(createURLWithPort(BASE_URI + "/PROFITMARGIN"), Parameter.class);
+        ResponseEntity<Parameter> responseEntityOK = testRestTemplate.getForEntity(createURLWithPort(BASE_URI + "/" + newId), Parameter.class);
         System.out.println("HttpStatus = " + responseEntityOK.getStatusCode().toString());
         assertThat(responseEntityOK.getBody()).isNotNull();
         assertThat(responseEntityOK.getStatusCode()).isEqualTo(HttpStatus.OK);
-        assertThat(responseEntityOK.getBody().getType()).isEqualTo(ParameterEnum.PROFITMARGIN);
+        assertThat(responseEntityOK.getBody().getType()).isEqualTo(ParameterEnum.PROMOTIONALDISCOUNT);
 
         //delete Parameter with id=1 that exists
         entity = new HttpEntity<>(null, httpHeaders);
@@ -82,7 +83,7 @@ public class ParameterEndPointIT {
         assertThat(responseDelete.getStatusCode()).isEqualTo(HttpStatus.OK);
 
         //try to lookup Parameter with type=PROFITMARGIN which is deleted
-        ResponseEntity<Parameter> responseEntityFind = testRestTemplate.getForEntity(createURLWithPort(BASE_URI + "/PROFITMARGIN"), Parameter.class);
+        ResponseEntity<Parameter> responseEntityFind = testRestTemplate.getForEntity(createURLWithPort(BASE_URI + "/1"), Parameter.class);
         System.out.println("HttpStatus = " + responseEntityFind.getStatusCode().toString());
 //        assertThat(responseEntityFind.getBody()).isNull();
         assertThat(responseEntityFind.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);

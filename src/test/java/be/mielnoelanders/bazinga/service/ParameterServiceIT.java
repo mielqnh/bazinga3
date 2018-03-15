@@ -30,13 +30,13 @@ public class ParameterServiceIT {
         Assert.assertFalse(newId == 0);
 
         //test read Parameter
-        Parameter readParm = parameterService.findOneById(insertedParm.getType());
+        Parameter readParm = parameterService.findOneById(insertedParm.getId());
         Assert.assertEquals(newParm.getType(), readParm.getType());
 
         //test update Parameter
         readParm.setPercentage(15);
-        boolean updatedParm = parameterService.updateOneById(readParm);
-        Assert.assertTrue(updatedParm);
+        Parameter updatedParm = parameterService.updateOneById(readParm.getId(), readParm);
+        Assert.assertEquals(15, updatedParm.getPercentage());
 
         //test delete Parameter
         boolean deletedParm = parameterService.deleteOneById(newId);

@@ -39,7 +39,8 @@ public class Parameter extends AbstractEntity implements Serializable {
     @Override
     public String toString() {
         return "Parameters{" +
-                "type='" + type + '\'' +
+                "id=" + super.getId() +
+                ", type='" + type + '\'' +
                 ", percentage=" + percentage +
                 '}';
     }

@@ -59,7 +59,7 @@ public class PublisherServiceUnitTest {
         Mockito.when(this.repo.save(testPublisher1)).thenReturn(testPublisher1);
 
         // Hier roep je de save methode op de CrudRepository aan VIA de service addPublisher.
-        Publisher resultFromService = this.publisherService.addPublisher(testPublisher1);
+        Publisher resultFromService = this.publisherService.addOne(testPublisher1);
 
         // testParameter1 heeft als inhoud : {0, "What The What", "www.whatthewhat.com"}
         assertTrue(resultFromService.getWebsite().equals("www.whatthewhat.com"));
@@ -69,7 +69,7 @@ public class PublisherServiceUnitTest {
     @Test
     public void getAllTest() {
         Mockito.when(this.repo.findAll()).thenReturn(publisherList);
-        Iterable<Publisher> resultFromService = this.publisherService.getAll();
+        Iterable<Publisher> resultFromService = this.publisherService.findAll();
         Publisher resultFromIterator = resultFromService.iterator().next();
         assertThat(resultFromIterator.getName()).isEqualTo("What The What");
         Mockito.verify(this.repo, Mockito.times(1)).findAll();
@@ -126,7 +126,7 @@ public class PublisherServiceUnitTest {
         // De mock geeft niets terug als je de deleteOneById oproept op de repository, dus kan je niets opgeven.
 
         // Hier roep je de deleteOneById op de Repository en de save op de CrudTRepository aan VIA de service deletePublisher.
-        boolean resultFromService = this.publisherService.deletePublisher(1L);
+        boolean resultFromService = this.publisherService.deleteOneById(1L);
 
         assertTrue(resultFromService);
 
@@ -143,7 +143,7 @@ public class PublisherServiceUnitTest {
         // De mock geeft niets terug als je de deleteOneById oproept op de repository, dus kan je niets opgeven.
 
         // Hier roep je de deleteOneById op de Repository en de save op de CrudTRepository aan VIA de service deletePublisher.
-        boolean resultFromService = this.publisherService.deletePublisher(100001L);
+        boolean resultFromService = this.publisherService.deleteOneById(100001L);
 
         assertFalse(resultFromService);
 
