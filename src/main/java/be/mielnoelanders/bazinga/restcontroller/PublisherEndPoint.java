@@ -34,6 +34,7 @@ public class PublisherEndPoint {
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ResponseEntity<Publisher> findOneById(@PathVariable Long id) {
         Publisher publisherFind = this.service.findOneById(id);
+        System.out.println("PublisherEndPoint publisherFind = " + publisherFind);
 
         if (publisherFind == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -54,10 +55,10 @@ public class PublisherEndPoint {
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<Publisher> deleteOneById(@PathVariable Long id) {
-        boolean publisherDelete = service.deleteOneById(id);
+        Publisher deletedPublisher = service.deleteOneById(id);
 
-        if (publisherDelete) {
-            return new ResponseEntity<>(HttpStatus.OK);
+        if (deletedPublisher != null) {
+            return new ResponseEntity<>(deletedPublisher, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }

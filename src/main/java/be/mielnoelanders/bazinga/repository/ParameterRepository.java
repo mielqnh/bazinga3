@@ -8,6 +8,4 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ParameterRepository extends JpaRepository<Parameter,Long> {
 
-    // Get parameter by type //
-    Parameter findByType(ParameterEnum type);
 }
