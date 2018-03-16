@@ -16,11 +16,6 @@ public class Parameter extends AbstractEntity implements Serializable {
     public Parameter() {
     }
 
-    public Parameter(ParameterEnum type, int percentage) {
-        this.type = type;
-        this.percentage = percentage;
-    }
-
     //GETTERS & SETTERS
     public ParameterEnum getType() {
         return type;
@@ -39,7 +34,7 @@ public class Parameter extends AbstractEntity implements Serializable {
     @Override
     public String toString() {
         return "Parameters{" +
-                "id=" + super.getId() +
+//                "id=" + super.getId() +
                 ", type='" + type + '\'' +
                 ", percentage=" + percentage +
                 '}';

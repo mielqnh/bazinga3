@@ -55,8 +55,7 @@ public class PublisherServiceImpl implements PublisherService {
 
     @Override
     public Publisher findOneById(Long id) {
-        Optional<Publisher> result = repo.findById(id);
-        return result.orElse(null);
+        return repo.findById(id).orElse(null);
     }
 
     // --> update
@@ -75,12 +74,13 @@ public class PublisherServiceImpl implements PublisherService {
 
     // --> delete
     @Override
-    public boolean deleteOneById(Long id) {
-        if (this.repo.existsById(id)) {
+    public Publisher deleteOneById(Long id) {
+        Publisher deletedPublisher = findOneById(id);
+        if (deletedPublisher != null) {
             this.repo.deleteById(id);
-            return true;
+            return deletedPublisher;
         }
-        return false;
+        return null;
     }
 
     // --> others

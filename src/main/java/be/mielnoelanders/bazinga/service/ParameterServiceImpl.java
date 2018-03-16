@@ -56,8 +56,7 @@ public class ParameterServiceImpl implements ParameterService {
 
     @Override
     public Parameter findOneById(long id) {
-        Optional<Parameter> result = repo.findById(id);
-        return result.orElse(null);
+        return repo.findById(id).orElse(null);
     }
 
     // --> update

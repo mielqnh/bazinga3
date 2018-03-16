@@ -16,7 +16,7 @@ public interface PublisherService {
     Publisher updateOneById(Long id, Publisher publisher);
 
     // --> delete
-    boolean deleteOneById(Long id);
+    Publisher deleteOneById(Long id);
 
     // --> others
 

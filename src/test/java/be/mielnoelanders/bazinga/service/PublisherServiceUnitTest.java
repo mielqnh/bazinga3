@@ -96,9 +96,9 @@ public class PublisherServiceUnitTest {
         // De mock geeft niets terug als je de deleteOneById oproept op de repository, dus kan je niets opgeven.
 
         // Hier roep je de deleteOneById op de Repository en de save op de CrudTRepository aan VIA de service deletePublisher.
-        boolean resultFromService = this.publisherService.deleteOneById(1L);
+        Publisher resultFromService = this.publisherService.deleteOneById(1L);
 
-        assertTrue(resultFromService);
+        assertTrue(resultFromService.getWebsite().equals("www.whatthewhat.com"));
 
         // Tel hoeveel maal deleteOneById werd opgeroepen
         //  Mockito.verify(this.repo, Mockito.times(1)).deleteOneById(1L);
@@ -113,9 +113,9 @@ public class PublisherServiceUnitTest {
         // De mock geeft niets terug als je de deleteOneById oproept op de repository, dus kan je niets opgeven.
 
         // Hier roep je de deleteOneById op de Repository en de save op de CrudTRepository aan VIA de service deletePublisher.
-        boolean resultFromService = this.publisherService.deleteOneById(100001L);
+        Publisher resultFromService = this.publisherService.deleteOneById(100001L);
 
-        assertFalse(resultFromService);
+        assertTrue(resultFromService.getWebsite().equals(null));
 
         // Tel hoeveel maal deleteOneById werd opgeroepen
         //  Mockito.verify(this.repo, Mockito.times(0)).deleteOneById(100001L);
